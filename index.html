@@ -1,0 +1,65 @@
+<html>
+  <head>
+    <title>THE BEST CLASS EVER</title>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="atd.core.js"></script>
+    <script src="jquery.atd.js"></script>
+    <script src="csshttprequest.js"></script>
+  </head>
+
+  <body width="100%" height="100%" bgcolor="white">
+    <input id="text" />
+    <input type="submit" id="submit" />
+    <div class="results">
+    </div>
+<!--     <marquee scrollamount="1000" bgcolor="black" direction="down" width="100%" height="100%"><marquee behavior="alternate"><font color="yellow" size="32">AWESOME TEXT TWIST GAME</font></marquee></marquee> -->
+  </body>
+</html>
+
+<script type="text/javascript">
+ function check() {
+    AtD.checkCrossAJAX('text',
+    {
+       success : function(errorCount)
+       {
+          if (errorCount == 0)
+          {
+             $(".results").append($("#text").val() + "\n");
+          }
+       },
+
+       error : function(reason)
+       {
+          alert(reason);
+       }
+    });
+ };
+
+$("#text").on("keyup", function(e) {
+  if (e.keyCode == 13) {
+    check();
+  }
+});
+  //   $.ajax({
+  //     type: "GET",
+  //     contentType: "text/xml",
+  //     dataType: "text",
+  //     beforeSend: function (request) {
+  //       request.setRequestHeader('Access-Control-Allow-Origin', 'http://localhost:8000');
+  //       request.setRequestHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+  //       request.setRequestHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+  //       request.setRequestHeader('Access-Control-Allow-Credentials', true);
+  //     },
+  //     xhrFields: {
+  //       withCredentials: true
+  //     },
+  //     crossDomain: true,
+  //     url: "https://service.afterthedeadline.com/checkDocument",
+  //     data: { data: $("#text").val() },
+  //     success: function(resp) {
+  //       console.log(resp);
+  //     }
+  //   });
+  //   console.log($("#text").val());
+  // });
+</script>
