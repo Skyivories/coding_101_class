@@ -10,11 +10,13 @@ var randomBackgrounds = ["http://www.themarysue.com/wp-content/uploads/2014/09/t
 var selectedText = textTwistLibrary[getRandomInt(0, textTwistLibrary.length)];
 var validWords = selectedText.words.split(" ");
 
+// Helper functions ------------------------------------------------------------
+
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
-}
+};
 
-var revealAnswer = function(index) {
+function revealAnswer(index) {
   var words = $(".answers").text().split(" ");
   // Replace hidden word with real word
   words[index] = validWords[index];
@@ -22,9 +24,9 @@ var revealAnswer = function(index) {
 
   // Clear out input form
   $(".lettersField").val("");
-};
+}
 
-var randomizeCharacters = function(word) {
+function randomizeCharacters(word) {
   var charArray = word.split("");
   var n = charArray.length;
   for(var i = n - 1; i > 0; i--) {
@@ -36,6 +38,17 @@ var randomizeCharacters = function(word) {
   $(".letters").text(charArray.join(""));
 }
 
+function getIndexOfWord(answer) {
+  for (var i = 0; i < validWords.length; i++) {
+    if (validWords[i] === answer) {
+      return i;
+    }
+  }
+  return -1;
+}
+
+// Render letters and answers on page ------------------------------------------
+
 $(document).ready(function() {
   // Load ramdom background
   document.body.style.backgroundImage = "url(" + randomBackgrounds[getRandomInt(0, randomBackgrounds.length)] + ")";
@@ -46,8 +59,8 @@ $(document).ready(function() {
   $(".lettersField").on("keyup", function(e) {
     if (e.keyCode == 13) {
       var submittedAnswer = $(e.currentTarget).val();
-      var indexOfWord = checkAnswer(validWords, submittedAnswer);
-      if (indexOfWord >= 0) {
+      if (isValidAnswer(validWords, submittedAnswer)) {
+        var indexOfWord = getIndexOfWord(submittedAnswer);
         revealAnswer(indexOfWord);
       } else {
         $(".lettersField").val("");
@@ -68,7 +81,7 @@ $(document).ready(function() {
   });
 });
 
-// space bar randomizes letters
+// Attach listeners ------------------------------------------------------------
 $(document).on("keyup", function(e) {
   if (e.keyCode == 32) {
     var word = $(".letters").text();
