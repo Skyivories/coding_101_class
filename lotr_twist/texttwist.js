@@ -26,6 +26,7 @@ function revealAnswer(index) {
   $(".lettersField").val("");
 }
 
+// Given a string, return a new string with the characters in a random order
 function randomizeCharacters(word) {
   var charArray = word.split("");
   var n = charArray.length;
@@ -57,6 +58,7 @@ $(document).ready(function() {
   $(".answers").text(selectedText.words.replace(/[a-z]/g, "-"));
 
   $(".lettersField").on("keyup", function(e) {
+    // Enter key functionality
     if (e.keyCode == 13) {
       var submittedAnswer = $(e.currentTarget).val();
       if (isValidAnswer(validWords, submittedAnswer)) {
@@ -67,10 +69,11 @@ $(document).ready(function() {
       }
       $(".letters").text(selectedText.letters);
     } else {
+      // Check that the input is only valid letters
       var regex = RegExp("[" + selectedText.letters + "]+");
       var newInputVal = $(".lettersField").val().match(regex);
       $(".lettersField").val(newInputVal);
-
+      // If a user types a valid character, remove it from the letters display
       var charCode = e.keyCode;
       var charStr = String.fromCharCode(charCode).toLowerCase();
       if ($(".letters").text().indexOf(charStr) >= 0) {
