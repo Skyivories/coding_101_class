@@ -33,7 +33,7 @@ var randomizeCharacters = function(word) {
       charArray[i] = charArray[j];
       charArray[j] = tmp;
   }
-  $(".letters").html(charArray.join(""));
+  $(".letters").text(charArray.join(""));
 }
 
 $(document).ready(function() {
@@ -52,13 +52,26 @@ $(document).ready(function() {
       } else {
         $(".lettersField").val("");
       }
+      $(".letters").text(selectedText.letters);
+    } else {
+      var regex = RegExp("[" + selectedText.letters + "]+");
+      var newInputVal = $(".lettersField").val().match(regex);
+      $(".lettersField").val(newInputVal);
+
+      var charCode = e.keyCode;
+      var charStr = String.fromCharCode(charCode).toLowerCase();
+      if ($(".letters").text().indexOf(charStr) >= 0) {
+        var newLetters = $(".letters").text().replace(charStr, "");
+        $(".letters").text(newLetters);
+      }
     }
   });
 });
 
+// space bar randomizes letters
 $(document).on("keyup", function(e) {
   if (e.keyCode == 32) {
-    var word = $(".letters").html();
+    var word = $(".letters").text();
     randomizeCharacters(word);
   }
 })
