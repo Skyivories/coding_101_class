@@ -35,31 +35,29 @@
     });
  };
 
-$("#text").on("keyup", function(e) {
-  if (e.keyCode == 13) {
-    check();
-  }
-});
-  //   $.ajax({
-  //     type: "GET",
-  //     contentType: "text/xml",
-  //     dataType: "text",
-  //     beforeSend: function (request) {
-  //       request.setRequestHeader('Access-Control-Allow-Origin', 'http://localhost:8000');
-  //       request.setRequestHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-  //       request.setRequestHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-  //       request.setRequestHeader('Access-Control-Allow-Credentials', true);
-  //     },
-  //     xhrFields: {
-  //       withCredentials: true
-  //     },
-  //     crossDomain: true,
-  //     url: "https://service.afterthedeadline.com/checkDocument",
-  //     data: { data: $("#text").val() },
-  //     success: function(resp) {
-  //       console.log(resp);
-  //     }
-  //   });
-  //   console.log($("#text").val());
-  // });
+  var tree = function(leafs) {
+      var branches = [];
+      if( leafs.length == 1 ) return leafs;
+      for( var k in leafs ) {
+          var leaf = leafs[k];
+          tree(leafs.join('').replace(leaf,'').split('')).concat("").map(function(subtree) {
+              branches.push([leaf].concat(subtree));
+          });
+      }
+      return branches;
+  };
+  var testWords = function() {
+    words = tree("saddle".split('')).map(function(str){return str.join('')});
+    $.each(words, function(index, combo) {
+      console.log(combo);
+      $("#text").val(combo);
+      check();
+    });
+  };
+
+  $("#text").on("keyup", function(e) {
+    if (e.keyCode == 13) {
+      check();
+    }
+  });
 </script>
