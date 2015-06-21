@@ -72,6 +72,14 @@ $(document).ready(function() {
       }
     }
   });
+
+  $(".lettersField").on("keydown", function(e) {
+    if (e.keyCode == 8) {
+      var length = $(".lettersField").val().length;
+      var lastChar = $(".lettersField").val().substring(length-1, length);
+      $(".letters").text($(".letters").text() + lastChar);
+    }
+  });
 });
 
 $(document).on("keyup", function(e) {
