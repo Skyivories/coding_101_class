@@ -41,6 +41,11 @@ function getIndexOfWord(answer) {
   return -1;
 }
 
+function showAllAnswers() {
+  $(".answers").text(selectedText.words);
+  $(".showAllAnswers").hide();
+}
+
 // Render letters and answers on page ------------------------------------------
 
 $(document).ready(function() {
@@ -60,6 +65,8 @@ $(document).ready(function() {
       $(".letters").text(selectedText.letters);
     }
   });
+
+  $(".showAllAnswers").on("click", showAllAnswers);
 
   $(".lettersField").on("keydown", function(e) {
     // On backspace, put character back in letters display
