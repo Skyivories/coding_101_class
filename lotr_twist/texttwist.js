@@ -9,7 +9,7 @@ function getRandomInt(min, max) {
 }
 
 function revealAnswer(submittedAnswer) {
-  var index = getIndexOfWord(submittedAnswer);
+  var index = validWords.indexOf(submittedAnswer);
   var words = $(".answers").text().split(" ");
   // Replace hidden word with real word
   words[index] = validWords[index];
@@ -30,15 +30,6 @@ function randomizeCharacters(word) {
       charArray[j] = tmp;
   }
   $(".letters").text(charArray.join(""));
-}
-
-function getIndexOfWord(answer) {
-  for (var i = 0; i < validWords.length; i++) {
-    if (validWords[i] === answer) {
-      return i;
-    }
-  }
-  return -1;
 }
 
 function showAllAnswers() {
